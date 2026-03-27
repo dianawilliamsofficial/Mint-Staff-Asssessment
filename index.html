@@ -377,7 +377,6 @@ async function uploadVideo(qi){
   if(btn)btn.disabled=true;
   if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading to MINT Drive... please keep this page open</span>';
 
-  // Build video blob
   const blob = new Blob(recordedChunks[qi],{type:'video/webm'});
   const scenarioNum = qi===12?1:2;
   const fileName = `MINT_RLT_Video${scenarioNum}_${staffName.replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.webm`;
@@ -387,33 +386,44 @@ async function uploadVideo(qi){
   reader.readAsDataURL(blob);
   reader.onload = async ()=>{
     const base64 = reader.result.split(',')[1];
-    try{
-      const resp = await fetch(APPS_SCRIPT_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          fileName,
-          base64,
-          mimeType:'video/webm',
-          staffName,
-          staffLocation,
-          staffRole,
-          scenarioNum,
-          submittedAt: new Date().toLocaleString('en-AU')
-        })
-      });
-      const result = await resp.json();
-      if(result.success){
-        videoStatus[qi+'_uploaded']=true;
-        render();
-      } else {
-        if(st)st.innerHTML='<span style="color:#E24B4A">Upload failed — please try again or contact your team leader.</span>';
-        if(btn)btn.disabled=false;
-      }
-    }catch(e){
-      if(st)st.innerHTML='<span style="color:#E24B4A">Connection error — check your internet and try again.</span>';
-      if(btn)btn.disabled=false;
-    }
+
+    // Use a hidden form + iframe to avoid CORS entirely
+    const iframeName = 'upload_frame_'+qi;
+    const iframe = document.createElement('iframe');
+    iframe.name = iframeName;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = APPS_SCRIPT_URL;
+    form.target = iframeName;
+    form.style.display = 'none';
+
+    const fields = {
+      fileName, base64, mimeType:'video/webm',
+      staffName, staffLocation, staffRole,
+      scenarioNum, submittedAt: new Date().toLocaleString('en-AU')
+    };
+
+    Object.entries(fields).forEach(([k,v])=>{
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = k;
+      input.value = v;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Mark as submitted after short delay (form posts don't return a response)
+    setTimeout(()=>{
+      videoStatus[qi+'_uploaded'] = true;
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+      render();
+    }, 3000);
   };
 }
 
