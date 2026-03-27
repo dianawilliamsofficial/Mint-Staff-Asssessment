@@ -453,10 +453,60 @@ function nextQ(){
 
 function prevQ(){if(current>0){current--;render();}}
 
+function submitResults(score, pass){
+  const date = new Date().toLocaleString('en-AU');
+  // Build MC results summary
+  let mcResults = '';
+  for(let i=0;i<MC_TOTAL;i++){
+    const correct = answers[i]===QUESTIONS[i].correct;
+    mcResults += `Q${i+1}: ${correct?'CORRECT':'INCORRECT'} — ${QUESTIONS[i].q.substring(0,60)}...\n`;
+  }
+
+  const fields = {
+    submissionType: 'results',
+    staffName, staffLocation,
+    staffRole: staffRole||'Not specified',
+    submittedAt: date,
+    score: score+'/'+MC_TOTAL,
+    passed: pass?'PASS':'NOT YET PASSED',
+    mcResults,
+    written1: written[10]||'No response',
+    written2: written[11]||'No response',
+  };
+
+  const iframe = document.createElement('iframe');
+  iframe.name = 'results_frame';
+  iframe.style.display='none';
+  document.body.appendChild(iframe);
+
+  const form = document.createElement('form');
+  form.method='POST';
+  form.action=APPS_SCRIPT_URL;
+  form.target='results_frame';
+  form.style.display='none';
+
+  Object.entries(fields).forEach(([k,v])=>{
+    const input=document.createElement('input');
+    input.type='hidden';
+    input.name=k;
+    input.value=v;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(()=>{
+    try{document.body.removeChild(form);document.body.removeChild(iframe);}catch(e){}
+  },5000);
+}
+
 function showScore(){
   document.getElementById('screen-quiz').style.display='none';
   const score=calcScore();
   const pass=score>=PASS_SCORE;
+
+  // Submit full results to Drive
+  submitResults(score, pass);
   const pct2=Math.round(score/MC_TOTAL*100);
   const videosDone=[12,13].filter(i=>videoStatus[i+'_uploaded']).length;
   const writtenDone=[10,11].filter(i=>written[i]&&written[i].length>30).length;
