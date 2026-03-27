@@ -172,6 +172,7 @@ textarea:focus{border-color:#8B1A1A}
 
 <script>
 const QUESTIONS=[
+  {section:"Module 6 — Video Submission",type:"video",q:"Video scenario 1: The longevity conversation",scenario:"A new member aged 55 has joined MINT after reading about longevity science. They say: 'I've been reading a lot about mitochondria and ageing — I understand the theory but I'm not sure how Red Light Therapy actually fits into a longevity plan. Can you help me understand what it actually does and why it's worth doing consistently?'",tips:"Demonstrate how you would: connect RLT directly to mitochondrial health and the science of ageing, explain the collagen and circadian benefits in plain language, and position a consistent protocol as a long-term investment in how they age. Avoid recovery or fitness framing entirely. Aim for approximately 2 minutes."},
   {section:"Module 1 — Understanding RLT",type:"mc",q:"What does Red Light Therapy primarily stimulate inside your cells, and why does this matter for longevity?",opts:["The cell membrane, to improve nutrient absorption","The mitochondria, to produce more ATP — the energy that powers cellular repair and healthy ageing","The nucleus, to increase the rate of DNA replication","The lymphatic system, to accelerate detoxification"],correct:1,explanation:"RLT stimulates the mitochondria to produce more ATP. Mitochondrial function is one of the key drivers of how we age — when cells have more energy, they repair more effectively and age more slowly. This is the cellular foundation of longevity."},
   {section:"Module 1 — Understanding RLT",type:"mc",q:"A member asks: 'What actually is ATP and why does it matter?' Which response best reflects the MINT approach?",opts:["ATP is a protein that builds muscle — RLT helps your body make more of it after exercise","ATP stands for adenosine triphosphate — it's your body's energy currency. Every cell runs on it. RLT recharges your mitochondria so they produce more, helping your body repair, regenerate, and age better","ATP is a hormone that regulates metabolism — RLT stimulates its release through the skin","ATP is the body's hydration molecule — RLT improves how efficiently your cells use water"],correct:1,explanation:"ATP (adenosine triphosphate) is the energy currency of every cell. Mitochondria manufacture it constantly, but production declines with age and stress. A simple member-ready analogy: ATP is the battery charge inside every cell — RLT plugs the cells in and tops up the charge."},
   {section:"Module 1 — Understanding RLT",type:"mc",q:"Which wavelength of light is most directly associated with stimulating collagen production and skin longevity?",opts:["Near-infrared light at 810–900nm, which penetrates deep into the dermis","Red light at 630–660nm, which targets fibroblasts in the skin's surface layers","UV light at 290–320nm, which triggers vitamin D synthesis","Infrared light at 1000nm+, which heats the deeper tissue layers"],correct:1,explanation:"Red light at 630–660nm targets the skin's surface and directly stimulates fibroblasts — the cells responsible for producing collagen and elastin. This is why RLT is one of the most clinically supported tools for skin longevity and anti-ageing."},
@@ -184,12 +185,14 @@ const QUESTIONS=[
   {section:"Module 5 — Safety & Contraindications",type:"mc",q:"Which of the following requires you to pause and check with a senior team member before proceeding with a session?",opts:["A member who has used RLT at another wellness studio before","A member who is pregnant","A member who is over 60 and has never tried light therapy","A member who takes daily vitamin supplements"],correct:1,explanation:"Pregnancy is a contraindication for RLT — particularly over the abdomen. Always refer to your senior team member or ask the member to consult their healthcare provider before proceeding. Age alone and prior RLT experience are not contraindications."},
   {section:"Module 6 — Written Response",type:"written",q:"A prospective member in their late 40s says: 'I'm not really interested in fitness — I just want to age well, feel better, and look after myself long-term. Is Red Light Therapy relevant for me?' Write your response in 3–5 sentences.",placeholder:"Type your response here — frame RLT as a longevity tool, not a fitness or recovery product...",tips:"Focus on: mitochondrial health, collagen production, sleep and energy, and the idea of investing in how you age. This member doesn't exercise heavily — avoid recovery language entirely."},
   {section:"Module 6 — Written Response",type:"written",q:"A member has been coming for 3 weeks and says: 'I don't really feel any different yet — how do I know this is actually doing anything?' Write your response.",placeholder:"How would you reassure them, keep them motivated, and explain what's happening at a cellular level...",tips:"Draw on your knowledge of how cellular and mitochondrial changes work over time — benefits accumulate beneath the surface before they're visible. Reference collagen timelines, circadian shifts, and the importance of consistency for longevity outcomes."},
-  {section:"Module 6 — Video Submission",type:"video",q:"Video scenario 1: The longevity conversation",scenario:"A new member aged 55 has joined MINT after reading about longevity science. They say: 'I've been reading a lot about mitochondria and ageing — I understand the theory but I'm not sure how Red Light Therapy actually fits into a longevity plan. Can you help me understand what it actually does and why it's worth doing consistently?'",tips:"Demonstrate how you would: connect RLT directly to mitochondrial health and the science of ageing, explain the collagen and circadian benefits in plain language, and position a consistent protocol as a long-term investment in how they age. Avoid recovery or fitness framing entirely. Aim for approximately 2 minutes."},
   {section:"Module 6 — Video Submission",type:"video",q:"Video scenario 2: Handling longevity scepticism",scenario:"A prospective member says: 'I already eat well, exercise regularly, and take supplements. I feel like I'm doing everything right for my health. Why would I need to add Red Light Therapy on top of all that — what's it actually going to do for me that I'm not already getting?'",tips:"Show how you would: acknowledge that they're already doing the right things (don't be defensive), explain what RLT adds at the mitochondrial and cellular level that diet, exercise and supplements can't fully replicate, and position it as precision longevity — the next layer of investment in their health. Confident, not salesy."}
 ];
 
 const PASS_SCORE=7;
 const MC_TOTAL=10;
+// MC questions are now indices 1-10, written 11-12, videos 0 and 13
+const MC_START=1;
+const MC_END=10;
 let current=0,answers={},written={},videoStatus={},mediaRecorders={},recordedChunks={},streams={},recordingTimers={},elapsedTimes={};
 let staffName='',staffLocation='',staffRole='';
 
@@ -375,55 +378,47 @@ async function uploadVideo(qi){
   const st=document.getElementById('ups-'+qi);
   const btn=document.getElementById('upbtn-'+qi);
   if(btn)btn.disabled=true;
-  if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading to MINT Drive... please keep this page open</span>';
+  if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading... please wait and keep this page open</span>';
 
   const blob = new Blob(recordedChunks[qi],{type:'video/webm'});
-  const scenarioNum = qi===12?1:2;
-  const fileName = `MINT_RLT_Video${scenarioNum}_${staffName.replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.webm`;
+  const scenarioNum = qi===0?1:2;
+  const fileName = 'MINT_RLT_Video'+scenarioNum+'_'+staffName.replace(/\s+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.webm';
 
-  // Convert blob to base64
+  // Show file size to help diagnose
+  const sizeMB = (blob.size/1024/1024).toFixed(2);
+  if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading '+sizeMB+'MB... please keep this page open</span>';
+
   const reader = new FileReader();
   reader.readAsDataURL(blob);
-  reader.onload = async ()=>{
+  reader.onload = function(){
     const base64 = reader.result.split(',')[1];
 
-    // Use a hidden form + iframe to avoid CORS entirely
-    const iframeName = 'upload_frame_'+qi;
-    const iframe = document.createElement('iframe');
-    iframe.name = iframeName;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+    // Build form data as URL-encoded string to avoid truncation
+    const params = new URLSearchParams();
+    params.append('fileName', fileName);
+    params.append('base64', base64);
+    params.append('mimeType', 'video/webm');
+    params.append('staffName', staffName);
+    params.append('staffLocation', staffLocation);
+    params.append('staffRole', staffRole||'');
+    params.append('scenarioNum', scenarioNum);
+    params.append('submittedAt', new Date().toLocaleString('en-AU'));
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = APPS_SCRIPT_URL;
-    form.target = iframeName;
-    form.style.display = 'none';
-
-    const fields = {
-      fileName, base64, mimeType:'video/webm',
-      staffName, staffLocation, staffRole,
-      scenarioNum, submittedAt: new Date().toLocaleString('en-AU')
-    };
-
-    Object.entries(fields).forEach(([k,v])=>{
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = k;
-      input.value = v;
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-    form.submit();
-
-    // Mark as submitted after short delay (form posts don't return a response)
-    setTimeout(()=>{
+    // Use fetch with no-cors — won't get response back but data goes through
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: params.toString()
+    }).then(function(){
       videoStatus[qi+'_uploaded'] = true;
-      document.body.removeChild(form);
-      document.body.removeChild(iframe);
+      if(st)st.innerHTML='<span style="color:#1D9E75">&#10003; Submitted to MINT Drive successfully</span>';
       render();
-    }, 3000);
+    }).catch(function(){
+      // no-cors always fires .then() — .catch only fires on network failure
+      if(st)st.innerHTML='<span style="color:#E24B4A">Network error — check your connection and try again.</span>';
+      if(btn)btn.disabled=false;
+    });
   };
 }
 
@@ -440,7 +435,7 @@ function handleFileUpload(qi, input){
 
 function calcScore(){
   let s=0;
-  for(let i=0;i<MC_TOTAL;i++){if(answers[i]===QUESTIONS[i].correct)s++;}
+  for(let i=MC_START;i<=MC_END;i++){if(answers[i]===QUESTIONS[i].correct)s++;}
   return s;
 }
 
@@ -457,9 +452,9 @@ function submitResults(score, pass){
   const date = new Date().toLocaleString('en-AU');
   // Build MC results summary
   let mcResults = '';
-  for(let i=0;i<MC_TOTAL;i++){
+  for(let i=MC_START;i<=MC_END;i++){
     const correct = answers[i]===QUESTIONS[i].correct;
-    mcResults += `Q${i+1}: ${correct?'CORRECT':'INCORRECT'} — ${QUESTIONS[i].q.substring(0,60)}...\n`;
+    mcResults += `Q${i}: ${correct?'CORRECT':'INCORRECT'} — ${QUESTIONS[i].q.substring(0,60)}...\n`;
   }
 
   const fields = {
@@ -470,8 +465,8 @@ function submitResults(score, pass){
     score: score+'/'+MC_TOTAL,
     passed: pass?'PASS':'NOT YET PASSED',
     mcResults,
-    written1: written[10]||'No response',
-    written2: written[11]||'No response',
+    written1: written[11]||'No response',
+    written2: written[12]||'No response',
   };
 
   const iframe = document.createElement('iframe');
@@ -508,8 +503,8 @@ function showScore(){
   // Submit full results to Drive
   submitResults(score, pass);
   const pct2=Math.round(score/MC_TOTAL*100);
-  const videosDone=[12,13].filter(i=>videoStatus[i+'_uploaded']).length;
-  const writtenDone=[10,11].filter(i=>written[i]&&written[i].length>30).length;
+  const videosDone=[0,13].filter(i=>videoStatus[i+'_uploaded']).length;
+  const writtenDone=[11,12].filter(i=>written[i]&&written[i].length>30).length;
   const date=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
 
   let reviewHtml='';
@@ -517,17 +512,19 @@ function showScore(){
     if(q.type==='mc'){
       const c=answers[i]===q.correct;
       reviewHtml+='<div class="review-item"><div class="review-icon '+(c?'c':'w')+'">'+(c?'&#10003;':'&#10007;')+'</div>';
-      reviewHtml+='<div><div class="review-q">Q'+(i+1)+': '+q.q+'</div>';
+      reviewHtml+='<div><div class="review-q">Q'+(i)+': '+q.q+'</div>';
       if(!c)reviewHtml+='<div class="review-ans">Your answer: '+q.opts[answers[i]]+'<br>Correct answer: '+q.opts[q.correct]+'</div>';
       reviewHtml+='</div></div>';
     } else if(q.type==='written'){
+      const wNum = i===11?1:2;
       reviewHtml+='<div class="review-item"><div class="review-icon s">W</div>';
-      reviewHtml+='<div><div class="review-q">Written response '+(i===10?'1':'2')+': '+q.q.substring(0,60)+'...</div>';
+      reviewHtml+='<div><div class="review-q">Written response '+wNum+': '+q.q.substring(0,60)+'...</div>';
       reviewHtml+='<div class="review-ans">Submitted for review by your MINT team leader.</div></div></div>';
     } else {
+      const vNum = i===0?1:2;
       const up=videoStatus[i+'_uploaded'];
       reviewHtml+='<div class="review-item"><div class="review-icon '+(up?'c':'s')+'">'+(up?'&#10003;':'V')+'</div>';
-      reviewHtml+='<div><div class="review-q">Video scenario '+(i===12?'1':'2')+'</div>';
+      reviewHtml+='<div><div class="review-q">Video scenario '+vNum+'</div>';
       reviewHtml+='<div class="review-ans">'+(up?'Submitted successfully.':'Not yet submitted — return to submit.')+'</div></div></div>';
     }
   });
