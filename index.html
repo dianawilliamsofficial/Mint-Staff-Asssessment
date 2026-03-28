@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MINT Longevity Lab — RLT Longevity Assessment</title>
+<title>MINT Longevity Lab — RLT Sales Role Play Assessment</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F8F5F2;color:#1A1A2E;min-height:100vh;padding:2rem 1rem}
@@ -13,32 +13,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .header-title{font-size:26px;font-weight:600;color:#1A1A2E;margin-bottom:.25rem}
 .header-sub{font-size:14px;color:#6B6B6B}
 .progress-bar{height:4px;background:#E8E2DC;border-radius:2px;margin-bottom:2rem}
-.progress-fill{height:100%;background:#8B1A1A;border-radius:2px;transition:width 0.4s ease}
+.progress-fill{height:100%;background:#8B1A1A;border-radius:2px;transition:width 0.5s ease}
 .card{background:#fff;border-radius:12px;border:1px solid #E8E2DC;padding:1.75rem;margin-bottom:1.25rem}
-.section-badge{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:3px 10px;border-radius:6px;background:#F5F0EB;color:#8B1A1A;border:1px solid #E8D8CE;margin-bottom:1rem}
+.stage-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:1rem}
+.stage-badge.opening{background:#F5F0EB;color:#8B1A1A;border:1px solid #E8D8CE}
+.stage-badge.pitch{background:#EBF0F5;color:#1A3A5C;border:1px solid #C8D8E8}
+.stage-badge.objection{background:#F5EBF0;color:#5C1A3A;border:1px solid #E8C8D8}
+.stage-badge.close{background:#EBF5EB;color:#1A5C1A;border:1px solid #C8E8C8}
+.stage-badge.response{background:#FFFBF0;color:#8B6914;border:1px solid #E8D8A0}
 .q-num{font-size:12px;color:#999;margin-bottom:.35rem}
-.q-text{font-size:17px;font-weight:500;color:#1A1A2E;line-height:1.55;margin-bottom:1.5rem}
-.options{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem}
-.opt{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid #E8E2DC;border-radius:8px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;user-select:none}
-.opt:hover{border-color:#C4A89A;background:#FAF5F0}
-.opt.selected{border-color:#8B1A1A;background:#FAF5F0}
-.opt.correct{border-color:#1D9E75;background:#E8F7F2}
-.opt.wrong{border-color:#E24B4A;background:#FEF0F0}
-.opt-letter{width:26px;height:26px;border-radius:50%;border:1px solid #D4C5B5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#6B6B6B;flex-shrink:0;margin-top:1px;transition:all .15s}
-.opt.selected .opt-letter{background:#8B1A1A;border-color:#8B1A1A;color:#fff}
-.opt.correct .opt-letter{background:#1D9E75;border-color:#1D9E75;color:#fff}
-.opt.wrong .opt-letter{background:#E24B4A;border-color:#E24B4A;color:#fff}
-.opt-text{font-size:15px;color:#1A1A2E;line-height:1.45}
-.feedback{padding:12px 14px;border-radius:8px;font-size:14px;line-height:1.6;margin-bottom:1.25rem}
-.feedback.correct{background:#E8F7F2;color:#0F6E56;border:1px solid #9FE1CB}
-.feedback.wrong{background:#FEF0F0;color:#A32D2D;border:1px solid #F5C4B3}
-textarea{width:100%;min-height:130px;padding:12px 14px;font-size:15px;font-family:inherit;border:1px solid #E8E2DC;border-radius:8px;background:#fff;color:#1A1A2E;resize:vertical;line-height:1.65;outline:none;transition:border-color .15s}
-textarea:focus{border-color:#8B1A1A}
-.char-count{font-size:12px;color:#B0A898;text-align:right;margin-top:4px;margin-bottom:1.25rem}
+.q-text{font-size:17px;font-weight:500;color:#1A1A2E;line-height:1.55;margin-bottom:1rem}
+.q-sub{font-size:14px;color:#6B6B6B;line-height:1.6;margin-bottom:1.5rem}
+.member-response{background:#1A1A2E;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;position:relative}
+.member-response-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#D4C5B5;margin-bottom:.5rem}
+.member-avatar{width:36px;height:36px;border-radius:50%;background:#8B1A1A;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;margin-right:10px;flex-shrink:0}
+.member-header{display:flex;align-items:center;margin-bottom:.75rem}
+.member-name{font-size:14px;font-weight:600;color:#D4C5B5}
+.member-desc{font-size:12px;color:#8B8070}
+.member-quote{font-size:15px;color:#F5F0EB;line-height:1.65;font-style:italic;border-left:3px solid #8B1A1A;padding-left:1rem}
 .tips-box{padding:12px 14px;border-radius:8px;border:1px solid #E8E2DC;background:#F8F5F2;margin-bottom:1.25rem;font-size:13px;color:#6B6B6B;line-height:1.65}
 .tips-box strong{color:#1A1A2E}
+.objective-box{padding:12px 14px;border-radius:8px;border:1px solid #C8D8E8;background:#EBF0F5;margin-bottom:1.25rem;font-size:13px;color:#1A3A5C;line-height:1.65}
+.objective-box strong{color:#1A1A2E}
 .video-area{background:#F8F5F2;border-radius:10px;border:1px solid #E8E2DC;padding:1.25rem;margin-bottom:1.25rem}
-.video-scenario{font-size:14px;font-style:italic;color:#4A4A4A;padding:12px 14px;border-left:3px solid #8B1A1A;margin-bottom:1.25rem;line-height:1.65;background:#fff;border-radius:0 6px 6px 0}
 .video-preview{width:100%;aspect-ratio:16/9;border-radius:8px;background:#1A1A2E;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;overflow:hidden;position:relative}
 .video-preview video{width:100%;height:100%;object-fit:cover;display:none}
 .vp-placeholder{text-align:center;color:#D4C5B5;font-size:14px;pointer-events:none}
@@ -66,334 +63,416 @@ textarea:focus{border-color:#8B1A1A}
 .q-counter{font-size:13px;color:#999}
 .divider{height:1px;background:#E8E2DC;margin:1.5rem 0}
 .score-wrap{text-align:center;padding:1rem 0}
-.score-circle{width:150px;height:150px;border-radius:50%;border:4px solid #8B1A1A;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.5rem}
-.score-num{font-size:44px;font-weight:600;color:#8B1A1A;line-height:1}
-.score-denom{font-size:14px;color:#999;margin-top:4px}
-.score-title{font-size:22px;font-weight:600;color:#1A1A2E;margin-bottom:.5rem}
+.congrats-icon{font-size:56px;margin-bottom:1rem}
+.score-title{font-size:24px;font-weight:600;color:#1A1A2E;margin-bottom:.5rem}
 .score-sub{font-size:15px;color:#6B6B6B;margin-bottom:1.5rem;line-height:1.65;max-width:500px;margin-left:auto;margin-right:auto}
-.result-badge{display:inline-block;padding:6px 20px;border-radius:20px;font-size:14px;font-weight:600;margin-bottom:1.5rem}
-.result-badge.pass{background:#E8F7F2;color:#0F6E56}
-.result-badge.fail{background:#FEF0F0;color:#A32D2D}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem;text-align:center}
-.stat-card{background:#F8F5F2;border-radius:8px;padding:1rem}
-.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#999;margin-bottom:.3rem}
-.stat-val{font-size:26px;font-weight:600;color:#1A1A2E}
-.stat-val.pass{color:#1D9E75}
-.stat-val.fail{color:#E24B4A}
+.video-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:1.5rem}
+.vs-card{background:#F8F5F2;border-radius:8px;padding:1rem;text-align:center}
+.vs-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#999;margin-bottom:.3rem}
+.vs-val{font-size:20px;font-weight:600}
+.vs-val.done{color:#1D9E75}
+.vs-val.pending{color:#E24B4A}
 .review-list{border:1px solid #E8E2DC;border-radius:10px;overflow:hidden;margin-bottom:1.5rem;text-align:left}
 .review-item{padding:14px 16px;border-bottom:1px solid #E8E2DC;display:flex;gap:12px;align-items:flex-start}
 .review-item:last-child{border-bottom:none}
 .review-icon{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;margin-top:2px}
-.review-icon.c{background:#E8F7F2;color:#0F6E56}
-.review-icon.w{background:#FEF0F0;color:#A32D2D}
-.review-icon.s{background:#F5F0EB;color:#8B1A1A}
+.review-icon.done{background:#E8F7F2;color:#0F6E56}
+.review-icon.pending{background:#FEF0F0;color:#A32D2D}
 .review-q{font-size:14px;color:#1A1A2E;line-height:1.5;font-weight:500}
-.review-ans{font-size:13px;color:#6B6B6B;margin-top:3px;line-height:1.5}
+.review-ans{font-size:13px;color:#6B6B6B;margin-top:3px}
 .mint-mark{font-size:11px;color:#C4B8AE;letter-spacing:.08em;text-transform:uppercase;margin-top:2rem}
-.name-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
 .field-wrap label{display:block;font-size:12px;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.35rem}
-.field-wrap input, .field-wrap select{width:100%;padding:10px 12px;font-size:15px;font-family:inherit;border:1px solid #E8E2DC;border-radius:8px;background:#fff;color:#1A1A2E;outline:none;transition:border-color .15s}
-.field-wrap input:focus, .field-wrap select:focus{border-color:#8B1A1A}
-.start-screen{text-align:center;padding:1rem 0}
-.start-logo{font-size:42px;font-weight:700;letter-spacing:.15em;color:#1A1A2E;margin-bottom:.25rem}
-.start-sub{font-size:15px;color:#8B1A1A;letter-spacing:.2em;margin-bottom:2rem}
-.start-card{background:#fff;border-radius:12px;border:1px solid #E8E2DC;padding:2rem;margin-bottom:1.5rem;text-align:left}
-.start-card h3{font-size:15px;font-weight:600;color:#1A1A2E;margin-bottom:.75rem}
-.start-card ul{list-style:none;padding:0}
-.start-card ul li{font-size:14px;color:#6B6B6B;padding:5px 0;padding-left:1.25rem;position:relative;line-height:1.5}
-.start-card ul li::before{content:"—";position:absolute;left:0;color:#8B1A1A}
+.field-wrap input,.field-wrap select{width:100%;padding:10px 12px;font-size:15px;font-family:inherit;border:1px solid #E8E2DC;border-radius:8px;background:#fff;color:#1A1A2E;outline:none;transition:border-color .15s}
+.field-wrap input:focus,.field-wrap select:focus{border-color:#8B1A1A}
+.name-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+.journey-steps{display:flex;gap:0;margin-bottom:1.5rem;border-radius:8px;overflow:hidden;border:1px solid #E8E2DC}
+.journey-step{flex:1;padding:8px 4px;text-align:center;font-size:11px;font-weight:600;color:#999;background:#fff;border-right:1px solid #E8E2DC;transition:all .3s}
+.journey-step:last-child{border-right:none}
+.journey-step.active{background:#8B1A1A;color:#fff}
+.journey-step.complete{background:#E8F7F2;color:#0F6E56}
+.journey-step-num{display:block;font-size:16px;margin-bottom:2px}
+.unlock-message{text-align:center;padding:2rem 1rem;background:#FFFBF0;border-radius:10px;border:1px solid #E8D8A0;margin-bottom:1.25rem}
+.unlock-icon{font-size:40px;margin-bottom:.75rem}
+.unlock-title{font-size:16px;font-weight:600;color:#1A1A2E;margin-bottom:.4rem}
+.unlock-sub{font-size:14px;color:#6B6B6B;line-height:1.6}
 </style>
 </head>
 <body>
 <div class="page">
   <div class="header">
-    <div class="header-eyebrow">MINT Longevity Lab</div>
-    <div class="header-title">Red Light Therapy — Longevity Knowledge Assessment</div>
-    <div class="header-sub">Mitochondria, collagen, longevity and wellness — know the MINT difference</div>
+    <div class="header-eyebrow">MINT Longevity Lab — Mia Cole Sales Training</div>
+    <div class="header-title">RLT Sales Role Play Assessment</div>
+    <div class="header-sub">A real sales conversation in four stages — record, submit, then respond</div>
   </div>
 
   <div id="screen-start">
-    <div class="start-screen">
-      <div class="start-logo">MINT</div>
-      <div class="start-sub">LONGEVITY LAB</div>
-      <div class="start-card">
-        <h3>About this assessment</h3>
-        <ul>
-          <li>10 knowledge questions focused on mitochondria, collagen, longevity and wellness</li>
-          <li>2 short written response questions — longevity member conversations</li>
-          <li>2 video scenario submissions — longevity and anti-ageing consultations</li>
-          <li>Pass mark: 7 out of 10 on knowledge questions</li>
-          <li>Written and video responses reviewed by your team leader</li>
-          <li>Take your time — there is no time limit</li>
-        </ul>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:#1A1A2E;margin-bottom:.75rem">About this assessment</div>
+      <p style="font-size:14px;color:#6B6B6B;line-height:1.65;margin-bottom:1rem">You'll work through a real sales conversation with a new MINT member who has never heard of Red Light Therapy. The conversation unfolds in four stages — each time you submit a video, the member responds and the next stage unlocks.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1rem">
+        <div style="display:flex;gap:10px;align-items:center;font-size:13px;color:#6B6B6B"><span style="width:24px;height:24px;border-radius:50%;background:#8B1A1A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0">1</span>The opening — greet the member and introduce RLT</div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:13px;color:#6B6B6B"><span style="width:24px;height:24px;border-radius:50%;background:#1A3A5C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0">2</span>The pitch — explain the science and benefits</div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:13px;color:#6B6B6B"><span style="width:24px;height:24px;border-radius:50%;background:#5C1A3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0">3</span>The objection — handle the member's concern about value</div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:13px;color:#6B6B6B"><span style="width:24px;height:24px;border-radius:50%;background:#1A5C1A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0">4</span>The close — book the session and seal the deal</div>
       </div>
-      <div class="start-card">
-        <h3>Your details</h3>
-        <div class="name-row">
-          <div class="field-wrap">
-            <label>First name</label>
-            <input type="text" id="inp-first" placeholder="e.g. Sarah">
-          </div>
-          <div class="field-wrap">
-            <label>Last name</label>
-            <input type="text" id="inp-last" placeholder="e.g. Mitchell">
-          </div>
-        </div>
-        <div class="field-wrap" style="margin-bottom:.75rem">
-          <label>Studio / Location</label>
-          <select id="inp-location">
-            <option value="">Select your location</option>
-            <option>MINT Longevity Lab — Brighton East</option>
-            <option>Fernwood — Head Office</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field-wrap">
-          <label>Role</label>
-          <input type="text" id="inp-role" placeholder="e.g. Wellness Consultant">
-        </div>
-      </div>
-      <button class="nav-btn primary" onclick="startQuiz()" style="width:100%;padding:14px;font-size:16px">Begin Assessment</button>
+      <div style="background:#F5F0EB;border-radius:8px;padding:12px 14px;font-size:13px;color:#8B1A1A;font-weight:500">Each stage unlocks only after the previous video is submitted — take your time with each one.</div>
     </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:#1A1A2E;margin-bottom:.75rem">Your details</div>
+      <div class="name-row">
+        <div class="field-wrap"><label>First name</label><input type="text" id="inp-first" placeholder="e.g. Sarah"></div>
+        <div class="field-wrap"><label>Last name</label><input type="text" id="inp-last" placeholder="e.g. Mitchell"></div>
+      </div>
+      <div class="field-wrap" style="margin-bottom:.75rem">
+        <label>Studio / Location</label>
+        <select id="inp-location">
+          <option value="">Select your location</option>
+          <option>MINT Longevity Lab — Brighton East</option>
+          <option>Fernwood — Head Office</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field-wrap"><label>Role</label><input type="text" id="inp-role" placeholder="e.g. Wellness Consultant"></div>
+    </div>
+    <button class="nav-btn primary" onclick="startAssessment()" style="width:100%;padding:14px;font-size:16px">Begin Sales Role Play</button>
   </div>
 
-  <div id="screen-quiz" style="display:none">
+  <div id="screen-assessment" style="display:none">
     <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
-    <div class="card" id="question-area"></div>
+    <div class="journey-steps" id="journey">
+      <div class="journey-step" id="step-0"><span class="journey-step-num">1</span>Opening</div>
+      <div class="journey-step" id="step-1"><span class="journey-step-num">2</span>Pitch</div>
+      <div class="journey-step" id="step-2"><span class="journey-step-num">3</span>Objection</div>
+      <div class="journey-step" id="step-3"><span class="journey-step-num">4</span>Close</div>
+    </div>
+    <div class="card" id="stage-area"></div>
     <div class="nav-row">
-      <button class="nav-btn" id="btn-prev" onclick="prevQ()" disabled>Back</button>
-      <span class="q-counter" id="q-counter"></span>
-      <button class="nav-btn primary" id="btn-next" onclick="nextQ()">Next</button>
+      <div></div>
+      <span class="q-counter" id="stage-counter"></span>
+      <button class="nav-btn primary" id="btn-next" onclick="nextStage()">Next</button>
     </div>
   </div>
 
-  <div id="screen-score" style="display:none"></div>
+  <div id="screen-complete" style="display:none"></div>
 </div>
 
 <script>
-const QUESTIONS=[
-  {section:"Module 6 — Video Submission",type:"video",q:"Video scenario 1: The longevity conversation",scenario:"A new member aged 55 has joined MINT after reading about longevity science. They say: 'I've been reading a lot about mitochondria and ageing — I understand the theory but I'm not sure how Red Light Therapy actually fits into a longevity plan. Can you help me understand what it actually does and why it's worth doing consistently?'",tips:"Demonstrate how you would: connect RLT directly to mitochondrial health and the science of ageing, explain the collagen and circadian benefits in plain language, and position a consistent protocol as a long-term investment in how they age. Avoid recovery or fitness framing entirely. Aim for approximately 2 minutes."},
-  {section:"Module 1 — Understanding RLT",type:"mc",q:"What does Red Light Therapy primarily stimulate inside your cells, and why does this matter for longevity?",opts:["The cell membrane, to improve nutrient absorption","The mitochondria, to produce more ATP — the energy that powers cellular repair and healthy ageing","The nucleus, to increase the rate of DNA replication","The lymphatic system, to accelerate detoxification"],correct:1,explanation:"RLT stimulates the mitochondria to produce more ATP. Mitochondrial function is one of the key drivers of how we age — when cells have more energy, they repair more effectively and age more slowly. This is the cellular foundation of longevity."},
-  {section:"Module 1 — Understanding RLT",type:"mc",q:"A member asks: 'What actually is ATP and why does it matter?' Which response best reflects the MINT approach?",opts:["ATP is a protein that builds muscle — RLT helps your body make more of it after exercise","ATP stands for adenosine triphosphate — it's your body's energy currency. Every cell runs on it. RLT recharges your mitochondria so they produce more, helping your body repair, regenerate, and age better","ATP is a hormone that regulates metabolism — RLT stimulates its release through the skin","ATP is the body's hydration molecule — RLT improves how efficiently your cells use water"],correct:1,explanation:"ATP (adenosine triphosphate) is the energy currency of every cell. Mitochondria manufacture it constantly, but production declines with age and stress. A simple member-ready analogy: ATP is the battery charge inside every cell — RLT plugs the cells in and tops up the charge."},
-  {section:"Module 1 — Understanding RLT",type:"mc",q:"Which wavelength of light is most directly associated with stimulating collagen production and skin longevity?",opts:["Near-infrared light at 810–900nm, which penetrates deep into the dermis","Red light at 630–660nm, which targets fibroblasts in the skin's surface layers","UV light at 290–320nm, which triggers vitamin D synthesis","Infrared light at 1000nm+, which heats the deeper tissue layers"],correct:1,explanation:"Red light at 630–660nm targets the skin's surface and directly stimulates fibroblasts — the cells responsible for producing collagen and elastin. This is why RLT is one of the most clinically supported tools for skin longevity and anti-ageing."},
-  {section:"Module 2 — The Science of PBMt",type:"mc",q:"Why is mitochondrial decline considered so significant in the context of ageing?",opts:["Because mitochondria control hormone production, which declines steadily after age 30","Because mitochondria produce ATP — as their function declines with age, cells have less energy to repair, regenerate, and defend against damage, accelerating the ageing process","Because mitochondria regulate blood sugar, and declining function leads directly to diabetes","Because mitochondria are responsible for collagen production, so their decline causes skin ageing"],correct:1,explanation:"Mitochondrial decline is one of the most well-researched hallmarks of ageing. As mitochondria lose efficiency, ATP production drops, cellular repair slows, and the cumulative effect accelerates biological ageing across every system in the body. RLT directly addresses this by restoring mitochondrial function."},
-  {section:"Module 2 — The Science of PBMt",type:"mc",q:"A member asks how RLT could help them age better. Which response best reflects MINT's longevity positioning?",opts:["RLT is mainly a recovery tool — it helps you bounce back faster after exercise, which keeps you feeling younger","RLT works at the mitochondrial level to boost cellular energy, support collagen production, regulate your circadian rhythms, and reduce chronic inflammation — all of which are key drivers of how well and how long you live","RLT primarily improves skin appearance, which is the most visible sign of ageing","RLT detoxifies the body by stimulating the lymphatic system, removing the cellular waste that accelerates ageing"],correct:1,explanation:"At MINT, RLT is positioned as a longevity tool, not a recovery tool. Its benefits — mitochondrial energy, collagen stimulation, circadian regulation, and inflammation control — directly address the biological mechanisms that determine how we age. This is the conversation to have with every member."},
-  {section:"Module 3 — The Five Benefits",type:"mc",q:"How does RLT support collagen synthesis, and what is the longevity significance of this?",opts:["RLT heats the dermis, causing collagen fibres to contract and tighten temporarily","Red light stimulates fibroblasts to naturally produce more collagen and elastin — improving skin firmness, tone, and resilience as a long-term anti-ageing strategy","RLT increases circulation to the face, plumping existing collagen fibres with fluid","RLT blocks the enzymes that break down collagen, preserving what is already there"],correct:1,explanation:"Red light (630–660nm) directly stimulates fibroblasts — the cells responsible for producing collagen and elastin. With consistent use, this results in firmer, more resilient skin. This is anti-ageing from within — the body producing collagen naturally, not through external products or procedures."},
-  {section:"Module 3 — The Five Benefits",type:"mc",q:"Which of the following correctly describes the MINT priority order for RLT's five key benefits?",opts:["Pain relief, skin health, energy, recovery, sleep","Cellular renewal and longevity, collagen and skin health, sleep and energy, tissue repair and active longevity, inflammation control","Recovery, collagen, pain, sleep, energy","Skin health, detox, recovery, mood, anti-ageing"],correct:1,explanation:"At MINT, the five benefits are framed in longevity order: (1) cellular renewal and longevity, (2) collagen and skin health, (3) sleep, mood and energy, (4) tissue repair and active longevity, (5) inflammation control. This reflects our brand positioning as a longevity lab, not a recovery clinic."},
-  {section:"Module 3 — The Five Benefits",type:"mc",q:"Why is sleep positioned as a key longevity benefit of RLT at MINT, rather than simply a wellness perk?",opts:["Because members who sleep well are more likely to renew their memberships","Because RLT directly sedates the nervous system, making sleep onset faster","Because RLT supports mitochondrial function and helps regulate circadian rhythms — and sleep quality is one of the most significant determinants of how well and how long we age","Because the warmth of the RLT device relaxes muscles before bedtime"],correct:2,explanation:"Sleep is consistently ranked among the top factors in healthy ageing and longevity research. RLT supports circadian rhythm regulation through its effect on mitochondrial function — meaning better sleep is not just a comfort benefit, it's a genuine longevity outcome. This is an important distinction for MINT staff to make with members."},
-  {section:"Module 4 — Protocols",type:"mc",q:"A member aged 52 joins MINT with goals around skin health, energy, and healthy ageing. What is the most appropriate way to frame their RLT protocol?",opts:["Recommend RLT only after exercise sessions, as physical activity is the main driver of their goals","Position RLT as a core part of their longevity plan — 3–4 sessions per week targeting cellular renewal, collagen production, and circadian rhythm support, complemented by other MINT modalities","Suggest they start with one session per week to test tolerance before increasing frequency","Focus primarily on skin benefits and recommend 2 sessions per week as a cosmetic treatment"],correct:1,explanation:"For a longevity-focused member, RLT should be presented as a core pillar of their plan — not an add-on. Three to four sessions per week supports mitochondrial function, collagen synthesis, and circadian health simultaneously. Connecting RLT to their broader MINT longevity plan (including other modalities) is the ideal approach."},
-  {section:"Module 5 — Safety & Contraindications",type:"mc",q:"Which of the following requires you to pause and check with a senior team member before proceeding with a session?",opts:["A member who has used RLT at another wellness studio before","A member who is pregnant","A member who is over 60 and has never tried light therapy","A member who takes daily vitamin supplements"],correct:1,explanation:"Pregnancy is a contraindication for RLT — particularly over the abdomen. Always refer to your senior team member or ask the member to consult their healthcare provider before proceeding. Age alone and prior RLT experience are not contraindications."},
-  {section:"Module 6 — Written Response",type:"written",q:"A prospective member in their late 40s says: 'I'm not really interested in fitness — I just want to age well, feel better, and look after myself long-term. Is Red Light Therapy relevant for me?' Write your response in 3–5 sentences.",placeholder:"Type your response here — frame RLT as a longevity tool, not a fitness or recovery product...",tips:"Focus on: mitochondrial health, collagen production, sleep and energy, and the idea of investing in how you age. This member doesn't exercise heavily — avoid recovery language entirely."},
-  {section:"Module 6 — Written Response",type:"written",q:"A member has been coming for 3 weeks and says: 'I don't really feel any different yet — how do I know this is actually doing anything?' Write your response.",placeholder:"How would you reassure them, keep them motivated, and explain what's happening at a cellular level...",tips:"Draw on your knowledge of how cellular and mitochondrial changes work over time — benefits accumulate beneath the surface before they're visible. Reference collagen timelines, circadian shifts, and the importance of consistency for longevity outcomes."},
-  {section:"Module 6 — Video Submission",type:"video",q:"Video scenario 2: Handling longevity scepticism",scenario:"A prospective member says: 'I already eat well, exercise regularly, and take supplements. I feel like I'm doing everything right for my health. Why would I need to add Red Light Therapy on top of all that — what's it actually going to do for me that I'm not already getting?'",tips:"Show how you would: acknowledge that they're already doing the right things (don't be defensive), explain what RLT adds at the mitochondrial and cellular level that diet, exercise and supplements can't fully replicate, and position it as precision longevity — the next layer of investment in their health. Confident, not salesy."}
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw--4E1vHom7v2mXyCU-S33wrPhYN-II-VSaPGVdQuYn_PRJzflX2obQTb-OZLa-fdB/exec';
+
+const STAGES = [
+  {
+    id: 'opening',
+    badge: 'opening',
+    badgeLabel: 'Stage 1 of 4 — The Opening',
+    title: 'Greet the member and introduce RLT',
+    context: 'Sophie has just finished her MINT orientation tour and is standing outside the Red Light Therapy room. She looks curious but uncertain. She has never tried RLT and has only a vague idea of what it is.',
+    memberBefore: null,
+    objective: 'Greet Sophie warmly, acknowledge where she is in her journey, find out what she\'s hoping to achieve at MINT, and introduce Red Light Therapy in a way that feels relevant to her. This is the discovery stage — ask before you pitch.',
+    tips: 'Use an open question to find out her goals before explaining anything. Keep it warm and conversational — you\'re not presenting, you\'re connecting. Aim for 60–90 seconds.',
+    memberAfter: {
+      name: 'Sophie',
+      desc: 'New member, 44, joined MINT for skin health and energy',
+      quote: 'Oh okay — so it\'s not like a sunbed or anything? I\'ve heard of it but I always assumed it was more of a... beauty thing? I\'m actually more interested in energy and sleep — I\'ve been exhausted for months. Does it do anything for that?'
+    },
+    scenarioNum: 1
+  },
+  {
+    id: 'pitch',
+    badge: 'pitch',
+    badgeLabel: 'Stage 2 of 4 — The Pitch',
+    title: 'Explain the science and connect it to Sophie\'s goals',
+    context: 'Sophie has just told you she\'s exhausted and interested in improving her energy and sleep. She\'s open but needs to understand how RLT actually works before she\'ll consider booking.',
+    memberBefore: {
+      name: 'Sophie',
+      desc: 'Responding to your opening',
+      quote: 'Oh okay — so it\'s not like a sunbed or anything? I\'ve heard of it but I always assumed it was more of a... beauty thing? I\'m actually more interested in energy and sleep — I\'ve been exhausted for months. Does it do anything for that?'
+    },
+    objective: 'Explain how RLT works at the mitochondrial level in plain language — use the battery analogy. Connect the benefits directly to Sophie\'s goals: energy, sleep, and circadian rhythm regulation. Make the science feel exciting and accessible, not clinical.',
+    tips: 'Lead with her goals, not the technology. Mention mitochondria and ATP but translate immediately into plain language. Use the battery analogy. Aim for 90 seconds.',
+    memberAfter: {
+      name: 'Sophie',
+      desc: 'Intrigued but cautious about committing',
+      quote: 'That actually makes a lot of sense — I never thought about it that way. But honestly, I\'m already spending quite a bit on my membership here. Is this something I have to pay extra for? I don\'t want to keep adding things on if I\'m not sure it\'s going to make a difference for me specifically.'
+    },
+    scenarioNum: 2
+  },
+  {
+    id: 'objection',
+    badge: 'objection',
+    badgeLabel: 'Stage 3 of 4 — The Objection',
+    title: 'Handle Sophie\'s concern about cost and commitment',
+    context: 'Sophie is genuinely interested but hesitant about the extra cost. She\'s worried about paying for something she might not stick with or that might not work for her specifically.',
+    memberBefore: {
+      name: 'Sophie',
+      desc: 'Raising her concern',
+      quote: 'That actually makes a lot of sense — I never thought about it that way. But honestly, I\'m already spending quite a bit on my membership here. Is this something I have to pay extra for? I don\'t want to keep adding things on if I\'m not sure it\'s going to make a difference for me specifically.'
+    },
+    objective: 'Acknowledge her concern genuinely — don\'t dismiss it. Explain the packaging options clearly (single session to try, add-on, or membership tier). Reframe the value in terms of her goals. Reduce the perceived risk by suggesting she start with a single session before committing.',
+    tips: 'Validate first, then reframe. Present the single session as the low-risk entry point. Connect the cost to the outcome she actually wants — better energy and sleep. Be honest about what to expect and when. Aim for 60–90 seconds.',
+    memberAfter: {
+      name: 'Sophie',
+      desc: 'Warming up — nearly there',
+      quote: 'Okay, that\'s actually really helpful. A single session to try it makes sense. I just... I don\'t want to book something and then forget about it or not follow through. I\'ve done that before with things here. How do I actually make this work for me rather than just being another thing I tried once?'
+    },
+    scenarioNum: 3
+  },
+  {
+    id: 'close',
+    badge: 'close',
+    badgeLabel: 'Stage 4 of 4 — The Close',
+    title: 'Book Sophie\'s first session and set her up for success',
+    context: 'Sophie is ready — she just needs someone to make it easy and give her a clear plan. She\'s expressed concern about follow-through. This is your moment to close with confidence and care.',
+    memberBefore: {
+      name: 'Sophie',
+      desc: 'Ready but needs direction',
+      quote: 'Okay, that\'s actually really helpful. A single session to try it makes sense. I just... I don\'t want to book something and then forget about it or not follow through. I\'ve done that before with things here. How do I actually make this work for me rather than just being another thing I tried once?'
+    },
+    objective: 'Close the sale with warmth and confidence. Book the first session with Sophie right now. Give her a simple starting protocol — tell her exactly when and how often to come. Address her concern about follow-through by positioning yourself as her accountability partner. Make her feel like this is the beginning of something, not a transaction.',
+    tips: 'Don\'t ask "would you like to book" — say "let\'s get you in this week." Give her a specific day and time suggestion. Mention the check-in after the first session. End on something that makes her feel excited, not just sold to. Aim for 60–90 seconds.',
+    memberAfter: null,
+    scenarioNum: 4
+  }
 ];
 
-const PASS_SCORE=7;
-const MC_TOTAL=10;
-// MC questions are now indices 1-10, written 11-12, videos 0 and 13
-const MC_START=1;
-const MC_END=10;
-let current=0,answers={},written={},videoStatus={},mediaRecorders={},recordedChunks={},streams={},recordingTimers={},elapsedTimes={};
-let staffName='',staffLocation='',staffRole='';
+let currentStage = 0;
+let videoStatus = {};
+let recordedChunks = {};
+let streams = {};
+let mediaRecorders = {};
+let recordingTimers = {};
+let elapsedTimes = {};
+let staffName = '', staffLocation = '', staffRole = '';
 
-function startQuiz(){
-  const first=document.getElementById('inp-first').value.trim();
-  const last=document.getElementById('inp-last').value.trim();
-  staffLocation=document.getElementById('inp-location').value;
-  staffRole=document.getElementById('inp-role').value.trim();
+function startAssessment(){
+  const first = document.getElementById('inp-first').value.trim();
+  const last = document.getElementById('inp-last').value.trim();
+  staffLocation = document.getElementById('inp-location').value;
+  staffRole = document.getElementById('inp-role').value.trim();
   if(!first||!last){alert('Please enter your name before starting.');return;}
   if(!staffLocation){alert('Please select your location.');return;}
-  staffName=first+' '+last;
+  staffName = first+' '+last;
   document.getElementById('screen-start').style.display='none';
-  document.getElementById('screen-quiz').style.display='block';
-  render();
+  document.getElementById('screen-assessment').style.display='block';
+  renderStage();
 }
 
-function pct(){return Math.round((current+1)/QUESTIONS.length*100);}
+function updateJourney(){
+  STAGES.forEach((_,i)=>{
+    const el = document.getElementById('step-'+i);
+    if(!el) return;
+    el.className = 'journey-step';
+    if(i < currentStage) el.classList.add('complete');
+    else if(i === currentStage) el.classList.add('active');
+  });
+  const pct = Math.round((currentStage/STAGES.length)*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('stage-counter').textContent = 'Stage '+(currentStage+1)+' of '+STAGES.length;
+  document.getElementById('btn-next').style.display = currentStage >= STAGES.length ? 'none' : 'block';
+}
 
-function render(){
-  document.getElementById('prog').style.width=pct()+'%';
-  document.getElementById('q-counter').textContent=(current+1)+' of '+QUESTIONS.length;
-  document.getElementById('btn-prev').disabled=current===0;
-  document.getElementById('btn-next').textContent=current===QUESTIONS.length-1?'Submit assessment':'Next';
-  const q=QUESTIONS[current];
-  let html='';
-  html+='<div class="section-badge">'+q.section+'</div>';
-  html+='<div class="q-num">Question '+(current+1)+' of '+QUESTIONS.length+'</div>';
-  html+='<div class="q-text">'+q.q+'</div>';
+function renderStage(){
+  updateJourney();
+  if(currentStage >= STAGES.length){ showComplete(); return; }
 
-  if(q.type==='mc'){
-    html+='<div class="options" id="opts">';
-    ['A','B','C','D'].forEach((l,i)=>{
-      const sel=answers[current]!==undefined;
-      const isChosen=answers[current]===i;
-      const isCorrect=i===q.correct;
-      let cls='opt';
-      if(sel&&isChosen&&isCorrect)cls+=' correct';
-      else if(sel&&isChosen&&!isCorrect)cls+=' wrong';
-      else if(sel&&isCorrect)cls+=' correct';
-      const dis=sel?'pointer-events:none':'';
-      html+='<div class="'+cls+'" style="'+dis+'" onclick="selectOpt('+i+')">';
-      html+='<div class="opt-letter">'+l+'</div>';
-      html+='<div class="opt-text">'+q.opts[i]+'</div>';
-      html+='</div>';
-    });
-    html+='</div>';
-    if(answers[current]!==undefined){
-      const c=answers[current]===q.correct;
-      html+='<div class="feedback '+(c?'correct':'wrong')+'">'+(c?'&#10003; Correct — ':'&#10007; Incorrect — ')+q.explanation+'</div>';
-    }
+  const s = STAGES[currentStage];
+  const vs = videoStatus[currentStage] || 'idle';
+  const uploaded = videoStatus[currentStage+'_uploaded'];
+
+  let html = '';
+  html += '<div class="stage-badge '+s.badge+'">'+s.badgeLabel+'</div>';
+  html += '<div class="q-text">'+s.title+'</div>';
+
+  // Member's previous response (unlocks context for this stage)
+  if(s.memberBefore){
+    html += '<div class="member-response">';
+    html += '<div class="member-response-label">Member\'s response to your last video</div>';
+    html += '<div class="member-header"><div class="member-avatar">S</div><div><div class="member-name">'+s.memberBefore.name+'</div><div class="member-desc">'+s.memberBefore.desc+'</div></div></div>';
+    html += '<div class="member-quote">\''+s.memberBefore.quote+'\'</div>';
+    html += '</div>';
   }
 
-  if(q.type==='written'){
-    if(q.tips)html+='<div class="tips-box"><strong>Guide:</strong> '+q.tips+'</div>';
-    const v=written[current]||'';
-    html+='<textarea id="wtext" placeholder="'+q.placeholder+'" oninput="saveWritten(this.value)">'+v+'</textarea>';
-    html+='<div class="char-count" id="cc">'+v.length+' characters</div>';
+  // Setting / context
+  html += '<div class="tips-box"><strong>Setting:</strong> '+s.context+'</div>';
+
+  // Objective
+  html += '<div class="objective-box"><strong>Your objective:</strong> '+s.objective+'</div>';
+
+  // Tips
+  html += '<div class="tips-box"><strong>Tips:</strong> '+s.tips+'</div>';
+
+  // Video area
+  html += '<div class="video-area">';
+  html += '<div class="video-preview" id="vp-'+currentStage+'">';
+  html += '<div class="vp-placeholder" id="vpp-'+currentStage+'"><div class="icon">&#9673;</div><div>Camera preview will appear here</div></div>';
+  html += '<video id="vid-'+currentStage+'" playsinline muted></video>';
+  html += '</div>';
+  html += '<div class="video-controls" id="vc-'+currentStage+'">';
+
+  if(vs==='idle'||vs==='stopped'){
+    html += '<button class="btn btn-primary" onclick="startRecord('+currentStage+')">Start recording</button>';
+    html += '<label class="btn" style="cursor:pointer">Upload from library<input type="file" accept="video/*" style="display:none" onchange="handleFileUpload('+currentStage+',this)"></label>';
+  }
+  if(vs==='recording'){
+    html += '<button class="btn btn-danger" onclick="stopRecord('+currentStage+')">Stop recording</button>';
+    html += '<span class="rec-indicator"><span class="rec-dot"></span>Recording</span>';
+    html += '<span class="rec-timer" id="rt-'+currentStage+'">0:00</span>';
+  }
+  if(vs==='stopped'){
+    html += '<button class="btn" onclick="playback('+currentStage+')">Play back</button>';
+    html += '<button class="btn" onclick="reRecord('+currentStage+')">Re-record</button>';
+  }
+  html += '</div>';
+  html += '<div style="margin-top:.5rem;font-size:12px;color:#999"><strong>iPhone:</strong> Tap <strong>Start recording</strong> to choose a video from your Photos library. Record in your Camera app first, then select it here. &nbsp;|&nbsp; <strong>Desktop:</strong> Tap Start recording to use your webcam directly.</div>';
+
+  if(vs==='stopped'){
+    if(uploaded){
+      html += '<div class="upload-status done">&#10003; Submitted to MINT Drive</div>';
+    } else {
+      html += '<div style="margin-top:.75rem"><button class="btn btn-primary" id="upbtn-'+currentStage+'" onclick="uploadVideo('+currentStage+')">Submit to MINT Drive</button></div>';
+      html += '<div class="upload-status" id="ups-'+currentStage+'"></div>';
+    }
+  }
+  html += '</div>';
+
+  // What happens next
+  if(s.memberAfter && uploaded){
+    html += '<div style="margin-top:1.25rem;padding:14px;background:#E8F7F2;border-radius:8px;border:1px solid #9FE1CB;font-size:13px;color:#0F6E56;font-weight:500">&#10003; Video submitted — click Next to see how Sophie responds and unlock Stage '+(currentStage+2)+'.</div>';
+  } else if(!uploaded){
+    html += '<div style="margin-top:1rem;padding:12px 14px;background:#FFFBF0;border-radius:8px;border:1px solid #E8D8A0;font-size:13px;color:#8B6914">Record and submit your video to unlock the next stage.</div>';
   }
 
-  if(q.type==='video'){
-    if(q.tips)html+='<div class="tips-box"><strong>What to demonstrate:</strong> '+q.tips+'</div>';
-    html+='<div class="video-area">';
-    html+='<div class="video-scenario">&ldquo;'+q.scenario+'&rdquo;</div>';
+  document.getElementById('stage-area').innerHTML = html;
 
-    // iOS Safari fallback notice
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    if(isIOS){
-      html+='<div class="tips-box" style="margin-bottom:1rem"><strong>iPhone/iPad:</strong> Tap "Choose video file" below to record using your native camera app, then select the video to upload. Or use Chrome for in-browser recording.</div>';
-    }
-
-    html+='<div class="video-preview" id="vp-'+current+'">';
-    html+='<div class="vp-placeholder" id="vpp-'+current+'"><div class="icon">&#9673;</div><div>Camera preview will appear here</div></div>';
-    html+='<video id="vid-'+current+'" playsinline muted></video>';
-    html+='</div>';
-    const vs=videoStatus[current]||'idle';
-    html+='<div class="video-controls" id="vc-'+current+'">';
-    if(!isIOS){
-      if(vs==='idle'||vs==='stopped'){html+='<button class="btn btn-primary" onclick="startRecord('+current+')">Start recording</button>';}
-      if(vs==='recording'){
-        html+='<button class="btn btn-danger" onclick="stopRecord('+current+')">Stop recording</button>';
-        html+='<span class="rec-indicator"><span class="rec-dot"></span>Recording</span>';
-        html+='<span class="rec-timer" id="rt-'+current+'">0:00</span>';
-      }
-      if(vs==='stopped'){
-        html+='<button class="btn" onclick="playback('+current+')">Play back</button>';
-        html+='<button class="btn" onclick="reRecord('+current+')">Re-record</button>';
-      }
-    }
-    // iOS file picker always shown on iOS
-    if(isIOS && vs!=='stopped'){
-      html+='<label class="btn btn-primary" style="cursor:pointer">Choose video file<input type="file" accept="video/*" capture="user" style="display:none" onchange="handleFileUpload('+current+',this)"></label>';
-    }
-    html+='</div>';
-    if(vs==='stopped'){
-      if(videoStatus[current+'_uploaded']){
-        html+='<div class="upload-status done">&#10003; Submitted to MINT Drive successfully</div>';
-      } else {
-        const scriptReady = APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE';
-        if(scriptReady){
-          html+='<div style="margin-top:.75rem"><button class="btn btn-primary" id="upbtn-'+current+'" onclick="uploadVideo('+current+')">Submit to MINT Drive</button></div>';
-        } else {
-          html+='<div style="margin-top:.75rem;padding:12px;background:#FEF0F0;border-radius:8px;font-size:13px;color:#A32D2D;border:1px solid #F5C4B3"><strong>Setup required:</strong> Add your Google Apps Script URL to the quiz file to enable Drive uploads.</div>';
-        }
-        html+='<div class="upload-status" id="ups-'+current+'"></div>';
-      }
-    }
-    html+='</div>';
+  if(vs==='recording') attachStream(currentStage);
+  if(vs==='stopped' && recordedChunks[currentStage]){
+    const blob = new Blob(recordedChunks[currentStage],{type:'video/webm'});
+    const vid = document.getElementById('vid-'+currentStage);
+    if(vid){ vid.srcObject=null; vid.src=URL.createObjectURL(blob); vid.style.display='block'; }
+    const ph = document.getElementById('vpp-'+currentStage);
+    if(ph) ph.style.display='none';
   }
 
-  document.getElementById('question-area').innerHTML=html;
+  // Next button state
+  document.getElementById('btn-next').disabled = !uploaded;
+  document.getElementById('btn-next').textContent = currentStage === STAGES.length-1 ? 'Complete assessment' : 'Next stage';
+}
 
-  if(q.type==='video'&&videoStatus[current]==='recording')attachStream(current);
-  if(q.type==='video'&&videoStatus[current]==='stopped'&&recordedChunks[current]){
-    const blob=new Blob(recordedChunks[current],{type:'video/webm'});
-    const url=URL.createObjectURL(blob);
-    const vid=document.getElementById('vid-'+current);
-    if(vid){vid.srcObject=null;vid.src=url;vid.style.display='block';}
-    const ph=document.getElementById('vpp-'+current);
-    if(ph)ph.style.display='none';
+function nextStage(){
+  if(!videoStatus[currentStage+'_uploaded']){
+    alert('Please record and submit your video before moving to the next stage.');
+    return;
   }
+  currentStage++;
+  if(currentStage >= STAGES.length){ showComplete(); return; }
+  // Brief pause to allow memory to clear before loading next stage
+  setTimeout(()=>{
+    renderStage();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }, 500);
 }
 
 function attachStream(qi){
-  const vid=document.getElementById('vid-'+qi);
-  if(vid&&streams[qi]){
-    vid.srcObject=streams[qi];vid.style.display='block';
-    const ph=document.getElementById('vpp-'+qi);
-    if(ph)ph.style.display='none';
+  const vid = document.getElementById('vid-'+qi);
+  if(vid && streams[qi]){
+    vid.srcObject = streams[qi]; vid.style.display='block';
+    const ph = document.getElementById('vpp-'+qi);
+    if(ph) ph.style.display='none';
     vid.play().catch(()=>{});
   }
 }
 
-function selectOpt(i){if(answers[current]!==undefined)return;answers[current]=i;render();}
-
-function saveWritten(v){
-  written[current]=v;
-  const cc=document.getElementById('cc');
-  if(cc)cc.textContent=v.length+' characters';
-}
-
 async function startRecord(qi){
+  // Detect iOS
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  
+  if(isIOS){
+    // On iOS, trigger the file picker directly instead of camera API
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'video/*';
+    input.style.display = 'none';
+    input.onchange = function(){ handleFileUpload(qi, input); };
+    document.body.appendChild(input);
+    input.click();
+    setTimeout(()=>{ try{ document.body.removeChild(input); }catch(e){} }, 5000);
+    return;
+  }
+
   try{
-    const stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
-    streams[qi]=stream;recordedChunks[qi]=[];
-    const mr=new MediaRecorder(stream,{mimeType:'video/webm'});
+    const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+    streams[qi]=stream; recordedChunks[qi]=[];
+    const mr = new MediaRecorder(stream,{mimeType:'video/webm'});
     mediaRecorders[qi]=mr;
-    mr.ondataavailable=e=>{if(e.data.size>0)recordedChunks[qi].push(e.data);};
-    mr.onstop=()=>{videoStatus[qi]='stopped';render();};
-    mr.start(200);videoStatus[qi]='recording';elapsedTimes[qi]=0;render();attachStream(qi);
-    recordingTimers[qi]=setInterval(()=>{
+    mr.ondataavailable = e=>{ if(e.data.size>0) recordedChunks[qi].push(e.data); };
+    mr.onstop = ()=>{ videoStatus[qi]='stopped'; renderStage(); };
+    mr.start(200); videoStatus[qi]='recording'; elapsedTimes[qi]=0;
+    renderStage(); attachStream(qi);
+    recordingTimers[qi] = setInterval(()=>{
       elapsedTimes[qi]++;
-      const el=document.getElementById('rt-'+qi);
-      const m=Math.floor(elapsedTimes[qi]/60),s=elapsedTimes[qi]%60;
-      if(el)el.textContent=m+':'+(s<10?'0':'')+s;
+      const el = document.getElementById('rt-'+qi);
+      const m=Math.floor(elapsedTimes[qi]/60), s=elapsedTimes[qi]%60;
+      if(el) el.textContent = m+':'+(s<10?'0':'')+s;
     },1000);
-  }catch(e){alert('Camera access is required for video submissions. Please allow camera and microphone access in your browser and try again.');}
+  }catch(e){
+    alert('Camera access was denied. Please use the "Upload from library" button instead — record your video in the Camera app first, then select it here.');
+  }
 }
 
 function stopRecord(qi){
   clearInterval(recordingTimers[qi]);
-  if(mediaRecorders[qi])mediaRecorders[qi].stop();
-  if(streams[qi])streams[qi].getTracks().forEach(t=>t.stop());
+  if(mediaRecorders[qi]) mediaRecorders[qi].stop();
+  if(streams[qi]) streams[qi].getTracks().forEach(t=>t.stop());
 }
 
-function reRecord(qi){recordedChunks[qi]=[];videoStatus[qi]='idle';delete videoStatus[qi+'_uploaded'];render();}
+function reRecord(qi){
+  recordedChunks[qi]=[]; videoStatus[qi]='idle';
+  delete videoStatus[qi+'_uploaded'];
+  renderStage();
+}
 
 function playback(qi){
-  const vid=document.getElementById('vid-'+qi);
+  const vid = document.getElementById('vid-'+qi);
   if(vid){
     vid.srcObject=null;
-    const blob=new Blob(recordedChunks[qi],{type:'video/webm'});
+    const blob = new Blob(recordedChunks[qi],{type:'video/webm'});
     vid.src=URL.createObjectURL(blob);
-    vid.controls=true;vid.muted=false;
+    vid.controls=true; vid.muted=false;
     vid.play().catch(()=>{});
   }
 }
 
-// ── GOOGLE DRIVE UPLOAD ─────────────────────────────────────────────────
-// Paste your Google Apps Script Web App URL here after setup:
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw--4E1vHom7v2mXyCU-S33wrPhYN-II-VSaPGVdQuYn_PRJzflX2obQTb-OZLa-fdB/exec';
+function handleFileUpload(qi, input){
+  const file = input.files[0];
+  if(!file) return;
+  recordedChunks[qi] = [file];
+  videoStatus[qi] = 'stopped';
+  // Show preview
+  const vid = document.getElementById('vid-'+qi);
+  if(vid){
+    vid.src = URL.createObjectURL(file);
+    vid.style.display = 'block';
+    vid.controls = true;
+  }
+  const ph = document.getElementById('vpp-'+qi);
+  if(ph) ph.style.display = 'none';
+  renderStage();
+}
 
 async function uploadVideo(qi){
-  const st=document.getElementById('ups-'+qi);
-  const btn=document.getElementById('upbtn-'+qi);
-  if(btn)btn.disabled=true;
-  if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading... please wait and keep this page open</span>';
-
+  const st = document.getElementById('ups-'+qi);
+  const btn = document.getElementById('upbtn-'+qi);
+  if(btn) btn.disabled=true;
   const blob = new Blob(recordedChunks[qi],{type:'video/webm'});
-  const scenarioNum = qi===0?1:2;
-  const fileName = 'MINT_RLT_Video'+scenarioNum+'_'+staffName.replace(/\s+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.webm';
-
-  // Show file size to help diagnose
+  const stageName = STAGES[qi].id;
   const sizeMB = (blob.size/1024/1024).toFixed(2);
-  if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading '+sizeMB+'MB... please keep this page open</span>';
+  if(st) st.innerHTML='<span style="color:#8B1A1A">Uploading '+sizeMB+'MB... please keep this page open</span>';
 
+  const fileName = 'MINT_RLT_Sales_'+stageName+'_'+staffName.replace(/\s+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.webm';
   const reader = new FileReader();
   reader.readAsDataURL(blob);
   reader.onload = function(){
     const base64 = reader.result.split(',')[1];
-
-    // Build form data as URL-encoded string to avoid truncation
     const params = new URLSearchParams();
     params.append('fileName', fileName);
     params.append('base64', base64);
@@ -401,173 +480,88 @@ async function uploadVideo(qi){
     params.append('staffName', staffName);
     params.append('staffLocation', staffLocation);
     params.append('staffRole', staffRole||'');
-    params.append('scenarioNum', scenarioNum);
+    params.append('scenarioNum', STAGES[qi].scenarioNum);
     params.append('submittedAt', new Date().toLocaleString('en-AU'));
+    params.append('assessmentType', 'Sales Role Play — '+STAGES[qi].badgeLabel);
 
-    // Use fetch with no-cors — won't get response back but data goes through
-    fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    fetch(APPS_SCRIPT_URL,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
       body: params.toString()
     }).then(function(){
-      videoStatus[qi+'_uploaded'] = true;
-      if(st)st.innerHTML='<span style="color:#1D9E75">&#10003; Submitted to MINT Drive successfully</span>';
-      render();
+      videoStatus[qi+'_uploaded']=true;
+      // Free memory immediately after successful upload
+      recordedChunks[qi]=[];
+      if(streams[qi]){ try{ streams[qi].getTracks().forEach(t=>t.stop()); }catch(e){} streams[qi]=null; }
+      renderStage();
     }).catch(function(){
-      // no-cors always fires .then() — .catch only fires on network failure
-      if(st)st.innerHTML='<span style="color:#E24B4A">Network error — check your connection and try again.</span>';
-      if(btn)btn.disabled=false;
+      if(st) st.innerHTML='<span style="color:#E24B4A">Network error — check your connection and try again.</span>';
+      if(btn) btn.disabled=false;
     });
   };
 }
 
-// iOS Safari fallback — file upload input
-function handleFileUpload(qi, input){
-  const file = input.files[0];
-  if(!file) return;
-  recordedChunks[qi] = [file];
-  videoStatus[qi] = 'stopped';
-  const st=document.getElementById('ups-'+qi);
-  if(st)st.textContent='Video selected: '+file.name;
-  render();
-}
+function showComplete(){
+  document.getElementById('screen-assessment').style.display='none';
+  const allDone = STAGES.every((_,i)=>videoStatus[i+'_uploaded']);
+  const doneCount = STAGES.filter((_,i)=>videoStatus[i+'_uploaded']).length;
 
-function calcScore(){
-  let s=0;
-  for(let i=MC_START;i<=MC_END;i++){if(answers[i]===QUESTIONS[i].correct)s++;}
-  return s;
-}
+  // Submit summary
+  const params = new URLSearchParams();
+  params.append('submissionType','results');
+  params.append('staffName', staffName);
+  params.append('staffLocation', staffLocation);
+  params.append('staffRole', staffRole||'Not specified');
+  params.append('submittedAt', new Date().toLocaleString('en-AU'));
+  params.append('score', doneCount+'/4 videos submitted');
+  params.append('passed', allDone?'COMPLETE':'INCOMPLETE');
+  params.append('written1','Sales role play assessment — see video submissions');
+  params.append('written2','Assessment type: RLT Sales Role Play — New Member Scenario');
+  params.append('mcResults', STAGES.map((s,i)=>'Stage '+(i+1)+' ('+s.id+'): '+(videoStatus[i+'_uploaded']?'Submitted':'Not submitted')).join('\n'));
+  fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()}).catch(()=>{});
 
-function nextQ(){
-  const q=QUESTIONS[current];
-  if(q.type==='mc'&&answers[current]===undefined){alert('Please select an answer before continuing.');return;}
-  if(current===QUESTIONS.length-1){showScore();return;}
-  current++;render();
-}
-
-function prevQ(){if(current>0){current--;render();}}
-
-function submitResults(score, pass){
-  const date = new Date().toLocaleString('en-AU');
-  // Build MC results summary
-  let mcResults = '';
-  for(let i=MC_START;i<=MC_END;i++){
-    const correct = answers[i]===QUESTIONS[i].correct;
-    mcResults += `Q${i}: ${correct?'CORRECT':'INCORRECT'} — ${QUESTIONS[i].q.substring(0,60)}...\n`;
-  }
-
-  const fields = {
-    submissionType: 'results',
-    staffName, staffLocation,
-    staffRole: staffRole||'Not specified',
-    submittedAt: date,
-    score: score+'/'+MC_TOTAL,
-    passed: pass?'PASS':'NOT YET PASSED',
-    mcResults,
-    written1: written[11]||'No response',
-    written2: written[12]||'No response',
-  };
-
-  const iframe = document.createElement('iframe');
-  iframe.name = 'results_frame';
-  iframe.style.display='none';
-  document.body.appendChild(iframe);
-
-  const form = document.createElement('form');
-  form.method='POST';
-  form.action=APPS_SCRIPT_URL;
-  form.target='results_frame';
-  form.style.display='none';
-
-  Object.entries(fields).forEach(([k,v])=>{
-    const input=document.createElement('input');
-    input.type='hidden';
-    input.name=k;
-    input.value=v;
-    form.appendChild(input);
+  let reviewHtml = '';
+  STAGES.forEach((s,i)=>{
+    const done = videoStatus[i+'_uploaded'];
+    reviewHtml += '<div class="review-item">';
+    reviewHtml += '<div class="review-icon '+(done?'done':'pending')+'">'+(done?'&#10003;':'&#10007;')+'</div>';
+    reviewHtml += '<div><div class="review-q">Stage '+(i+1)+': '+s.title+'</div>';
+    reviewHtml += '<div class="review-ans">'+(done?'Submitted to MINT Drive successfully.':'Not submitted.')+'</div></div></div>';
   });
 
-  document.body.appendChild(form);
-  form.submit();
-  setTimeout(()=>{
-    try{document.body.removeChild(form);document.body.removeChild(iframe);}catch(e){}
-  },5000);
-}
-
-function showScore(){
-  document.getElementById('screen-quiz').style.display='none';
-  const score=calcScore();
-  const pass=score>=PASS_SCORE;
-
-  // Submit full results to Drive
-  submitResults(score, pass);
-  const pct2=Math.round(score/MC_TOTAL*100);
-  const videosDone=[0,13].filter(i=>videoStatus[i+'_uploaded']).length;
-  const writtenDone=[11,12].filter(i=>written[i]&&written[i].length>30).length;
-  const date=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
-
-  let reviewHtml='';
-  QUESTIONS.forEach((q,i)=>{
-    if(q.type==='mc'){
-      const c=answers[i]===q.correct;
-      reviewHtml+='<div class="review-item"><div class="review-icon '+(c?'c':'w')+'">'+(c?'&#10003;':'&#10007;')+'</div>';
-      reviewHtml+='<div><div class="review-q">Q'+(i)+': '+q.q+'</div>';
-      if(!c)reviewHtml+='<div class="review-ans">Your answer: '+q.opts[answers[i]]+'<br>Correct answer: '+q.opts[q.correct]+'</div>';
-      reviewHtml+='</div></div>';
-    } else if(q.type==='written'){
-      const wNum = i===11?1:2;
-      reviewHtml+='<div class="review-item"><div class="review-icon s">W</div>';
-      reviewHtml+='<div><div class="review-q">Written response '+wNum+': '+q.q.substring(0,60)+'...</div>';
-      reviewHtml+='<div class="review-ans">Submitted for review by your MINT team leader.</div></div></div>';
-    } else {
-      const vNum = i===0?1:2;
-      const up=videoStatus[i+'_uploaded'];
-      reviewHtml+='<div class="review-item"><div class="review-icon '+(up?'c':'s')+'">'+(up?'&#10003;':'V')+'</div>';
-      reviewHtml+='<div><div class="review-q">Video scenario '+vNum+'</div>';
-      reviewHtml+='<div class="review-ans">'+(up?'Submitted successfully.':'Not yet submitted — return to submit.')+'</div></div></div>';
-    }
-  });
-
-  const sc=document.getElementById('screen-score');
-  sc.innerHTML=`
+  const sc = document.getElementById('screen-complete');
+  sc.innerHTML = `
     <div class="card score-wrap">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8B1A1A;margin-bottom:1.5rem">MINT Longevity Lab — Assessment Complete</div>
-      <div class="score-circle">
-        <div class="score-num">${score}</div>
-        <div class="score-denom">out of ${MC_TOTAL}</div>
-      </div>
-      <div class="score-title">${pass?'Well done, '+staffName.split(' ')[0]+'!':'Keep studying, '+staffName.split(' ')[0]}</div>
-      <div class="result-badge ${pass?'pass':'fail'}">${pass?'&#10003; Pass &mdash; '+pct2+'%':'&#10007; Not yet passed &mdash; '+pct2+'%'}</div>
-      <div class="score-sub">${pass
-        ?'You\'ve passed the RLT knowledge assessment. Your written responses and video submissions will be reviewed by your MINT team leader. Well done on completing your training.'
-        :'You need '+PASS_SCORE+'/'+MC_TOTAL+' or more to pass. Review Modules 1–5 in your training guide and speak with your team leader before re-attempting.'
+      <div class="congrats-icon">${allDone?'🎉':'👏'}</div>
+      <div class="score-title">${allDone?'Sales role play complete, '+staffName.split(' ')[0]+'!':'Well done, '+staffName.split(' ')[0]}</div>
+      <div class="score-sub">${allDone
+        ?'All four stages submitted. Your team leader will review your videos and provide feedback on your opening, pitch, objection handling, and close.'
+        :'You\'ve completed '+doneCount+' of 4 stages. Any missing videos can be resubmitted by restarting the assessment.'
       }</div>
-      <div class="divider"></div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Knowledge score</div><div class="stat-val ${pass?'pass':'fail'}">${score}/${MC_TOTAL}</div></div>
-        <div class="stat-card"><div class="stat-label">Written responses</div><div class="stat-val">${writtenDone}/2</div></div>
-        <div class="stat-card"><div class="stat-label">Videos submitted</div><div class="stat-val">${videosDone}/2</div></div>
+      <div class="video-summary">
+        <div class="vs-card"><div class="vs-label">Videos submitted</div><div class="vs-val ${allDone?'done':'pending'}">${doneCount}/4</div></div>
+        <div class="vs-card"><div class="vs-label">Status</div><div class="vs-val ${allDone?'done':'pending'}">${allDone?'Complete':'Incomplete'}</div></div>
       </div>
       <div style="background:#F8F5F2;border-radius:8px;padding:1rem;font-size:13px;color:#6B6B6B;margin-bottom:1.5rem;text-align:left;line-height:1.65">
         <strong style="color:#1A1A2E">Submission summary</strong><br>
         Staff member: ${staffName} &nbsp;|&nbsp; Location: ${staffLocation}<br>
-        Role: ${staffRole||'Not specified'} &nbsp;|&nbsp; Completed: ${date}
+        Role: ${staffRole||'Not specified'} &nbsp;|&nbsp; Completed: ${new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})}
       </div>
       <div class="divider"></div>
-      <div style="text-align:left;font-size:14px;font-weight:600;color:#1A1A2E;margin-bottom:.75rem">Question review</div>
+      <div style="text-align:left;font-size:14px;font-weight:600;color:#1A1A2E;margin-bottom:.75rem">Stage review</div>
       <div class="review-list">${reviewHtml}</div>
-      <button class="nav-btn" onclick="restart()" style="margin-bottom:1rem;width:100%">Restart assessment</button>
-      <div class="mint-mark">MINT Longevity Lab &nbsp;&middot;&nbsp; RLT Longevity Assessment &nbsp;&middot;&nbsp; Internal Use Only &nbsp;&middot;&nbsp; 2026</div>
+      <button class="nav-btn" onclick="restartAssessment()" style="margin-bottom:1rem;width:100%">Restart assessment</button>
+      <div class="mint-mark">MINT Longevity Lab &nbsp;&middot;&nbsp; RLT Sales Role Play &nbsp;&middot;&nbsp; Internal Use Only &nbsp;&middot;&nbsp; 2026</div>
     </div>
   `;
   sc.style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function restart(){
-  current=0;answers={};written={};videoStatus={};mediaRecorders={};recordedChunks={};streams={};recordingTimers={};elapsedTimes={};
-  document.getElementById('screen-score').style.display='none';
+function restartAssessment(){
+  currentStage=0; videoStatus={}; recordedChunks={}; streams={}; mediaRecorders={}; recordingTimers={}; elapsedTimes={};
+  document.getElementById('screen-complete').style.display='none';
   document.getElementById('screen-start').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
