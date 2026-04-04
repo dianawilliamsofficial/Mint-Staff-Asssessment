@@ -440,8 +440,7 @@ function showScore(){
   const writtenDone=[11,12].filter(i=>written[i]&&written[i].length>30).length;
   const date=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
 
-  // Auto-open Drive folder
-  setTimeout(()=>{ window.open(DRIVE_FOLDER_URL,'_blank'); }, 1500);
+  // Drive folder opened by staff via button below
 
   let reviewHtml='';
   QUESTIONS.forEach((q,i)=>{
