@@ -377,56 +377,32 @@ function playback(qi){
   }
 }
 
-// ── GOOGLE DRIVE UPLOAD ─────────────────────────────────────────────────
-// Paste your Google Apps Script Web App URL here after setup:
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw--4E1vHom7v2mXyCU-S33wrPhYN-II-VSaPGVdQuYn_PRJzflX2obQTb-OZLa-fdB/exec';
+// ── GOOGLE DRIVE FOLDER — staff upload here after downloading ───────────
+const DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1kcea7042fqgu6aYDV-72nj_hZvU6I0vH';
 
-async function uploadVideo(qi){
+function uploadVideo(qi){
   const st=document.getElementById('ups-'+qi);
   const btn=document.getElementById('upbtn-'+qi);
   if(btn)btn.disabled=true;
-  if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading... please wait and keep this page open</span>';
 
   const blob = new Blob(recordedChunks[qi],{type:'video/webm'});
   const scenarioNum = qi===0?1:2;
   const fileName = 'MINT_RLT_Video'+scenarioNum+'_'+staffName.replace(/\s+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.webm';
 
-  // Show file size to help diagnose
-  const sizeMB = (blob.size/1024/1024).toFixed(2);
-  if(st)st.innerHTML='<span style="color:#8B1A1A">Uploading '+sizeMB+'MB... please keep this page open</span>';
+  // Auto-download to device
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(url); document.body.removeChild(a); }, 2000);
 
-  const reader = new FileReader();
-  reader.readAsDataURL(blob);
-  reader.onload = function(){
-    const base64 = reader.result.split(',')[1];
-
-    // Build form data as URL-encoded string to avoid truncation
-    const params = new URLSearchParams();
-    params.append('fileName', fileName);
-    params.append('base64', base64);
-    params.append('mimeType', 'video/webm');
-    params.append('staffName', staffName);
-    params.append('staffLocation', staffLocation);
-    params.append('staffRole', staffRole||'');
-    params.append('scenarioNum', scenarioNum);
-    params.append('submittedAt', new Date().toLocaleString('en-AU'));
-
-    // Use fetch with no-cors — won't get response back but data goes through
-    fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: params.toString()
-    }).then(function(){
-      videoStatus[qi+'_uploaded'] = true;
-      if(st)st.innerHTML='<span style="color:#1D9E75">&#10003; Submitted to MINT Drive successfully</span>';
-      render();
-    }).catch(function(){
-      // no-cors always fires .then() — .catch only fires on network failure
-      if(st)st.innerHTML='<span style="color:#E24B4A">Network error — check your connection and try again.</span>';
-      if(btn)btn.disabled=false;
-    });
-  };
+  videoStatus[qi+'_uploaded'] = true;
+  // Free memory
+  recordedChunks[qi]=[];
+  if(streams[qi]){ try{ streams[qi].getTracks().forEach(t=>t.stop()); }catch(e){} streams[qi]=null; }
+  render();
 }
 
 // iOS Safari fallback — file upload input
@@ -455,64 +431,17 @@ function nextQ(){
 
 function prevQ(){if(current>0){current--;render();}}
 
-function submitResults(score, pass){
-  const date = new Date().toLocaleString('en-AU');
-  // Build MC results summary
-  let mcResults = '';
-  for(let i=MC_START;i<=MC_END;i++){
-    const correct = answers[i]===QUESTIONS[i].correct;
-    mcResults += `Q${i}: ${correct?'CORRECT':'INCORRECT'} — ${QUESTIONS[i].q.substring(0,60)}...\n`;
-  }
-
-  const fields = {
-    submissionType: 'results',
-    staffName, staffLocation,
-    staffRole: staffRole||'Not specified',
-    submittedAt: date,
-    score: score+'/'+MC_TOTAL,
-    passed: pass?'PASS':'NOT YET PASSED',
-    mcResults,
-    written1: written[11]||'No response',
-    written2: written[12]||'No response',
-  };
-
-  const iframe = document.createElement('iframe');
-  iframe.name = 'results_frame';
-  iframe.style.display='none';
-  document.body.appendChild(iframe);
-
-  const form = document.createElement('form');
-  form.method='POST';
-  form.action=APPS_SCRIPT_URL;
-  form.target='results_frame';
-  form.style.display='none';
-
-  Object.entries(fields).forEach(([k,v])=>{
-    const input=document.createElement('input');
-    input.type='hidden';
-    input.name=k;
-    input.value=v;
-    form.appendChild(input);
-  });
-
-  document.body.appendChild(form);
-  form.submit();
-  setTimeout(()=>{
-    try{document.body.removeChild(form);document.body.removeChild(iframe);}catch(e){}
-  },5000);
-}
-
 function showScore(){
   document.getElementById('screen-quiz').style.display='none';
   const score=calcScore();
   const pass=score>=PASS_SCORE;
-
-  // Submit full results to Drive
-  submitResults(score, pass);
   const pct2=Math.round(score/MC_TOTAL*100);
   const videosDone=[0,13].filter(i=>videoStatus[i+'_uploaded']).length;
   const writtenDone=[11,12].filter(i=>written[i]&&written[i].length>30).length;
   const date=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+
+  // Auto-open Drive folder
+  setTimeout(()=>{ window.open(DRIVE_FOLDER_URL,'_blank'); }, 1500);
 
   let reviewHtml='';
   QUESTIONS.forEach((q,i)=>{
@@ -532,7 +461,7 @@ function showScore(){
       const up=videoStatus[i+'_uploaded'];
       reviewHtml+='<div class="review-item"><div class="review-icon '+(up?'c':'s')+'">'+(up?'&#10003;':'V')+'</div>';
       reviewHtml+='<div><div class="review-q">Video scenario '+vNum+'</div>';
-      reviewHtml+='<div class="review-ans">'+(up?'Submitted successfully.':'Not yet submitted — return to submit.')+'</div></div></div>';
+      reviewHtml+='<div class="review-ans">'+(up?'Downloaded to your device — upload to MINT Drive below.':'Not yet recorded — please go back and complete.')+'</div></div></div>';
     }
   });
 
@@ -547,15 +476,22 @@ function showScore(){
       <div class="score-title">${pass?'Well done, '+staffName.split(' ')[0]+'!':'Keep studying, '+staffName.split(' ')[0]}</div>
       <div class="result-badge ${pass?'pass':'fail'}">${pass?'&#10003; Pass &mdash; '+pct2+'%':'&#10007; Not yet passed &mdash; '+pct2+'%'}</div>
       <div class="score-sub">${pass
-        ?'You\'ve passed the RLT knowledge assessment. Your written responses and video submissions will be reviewed by your MINT team leader. Well done on completing your training.'
+        ?'You\'ve passed the RLT knowledge assessment. Your written responses and video submissions will be reviewed by your MINT team leader.'
         :'You need '+PASS_SCORE+'/'+MC_TOTAL+' or more to pass. Review Modules 1–5 in your training guide and speak with your team leader before re-attempting.'
       }</div>
       <div class="divider"></div>
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-label">Knowledge score</div><div class="stat-val ${pass?'pass':'fail'}">${score}/${MC_TOTAL}</div></div>
         <div class="stat-card"><div class="stat-label">Written responses</div><div class="stat-val">${writtenDone}/2</div></div>
-        <div class="stat-card"><div class="stat-label">Videos submitted</div><div class="stat-val">${videosDone}/2</div></div>
+        <div class="stat-card"><div class="stat-label">Videos downloaded</div><div class="stat-val">${videosDone}/2</div></div>
       </div>
+
+      <div style="background:#1A1A2E;border-radius:10px;padding:1.25rem;margin-bottom:1.25rem;text-align:left">
+        <div style="font-size:13px;font-weight:600;color:#FFFFFF;margin-bottom:.4rem">📥 Your videos have been saved to your Downloads folder</div>
+        <div style="font-size:12px;color:#D4C5B5;line-height:1.6;margin-bottom:1rem">Now upload them to MINT Drive — the folder has opened in a new tab. Drag and drop your downloaded video files into it.</div>
+        <button onclick="window.open('${DRIVE_FOLDER_URL}','_blank')" style="background:#8B1A1A;color:#fff;border:none;border-radius:6px;padding:.6rem 1.2rem;font-size:13px;font-weight:600;cursor:pointer;width:100%">📁 Open MINT Drive Folder</button>
+      </div>
+
       <div style="background:#F8F5F2;border-radius:8px;padding:1rem;font-size:13px;color:#6B6B6B;margin-bottom:1.5rem;text-align:left;line-height:1.65">
         <strong style="color:#1A1A2E">Submission summary</strong><br>
         Staff member: ${staffName} &nbsp;|&nbsp; Location: ${staffLocation}<br>
